@@ -1,56 +1,82 @@
+import pygame.draw
+
 from constants import *
 from pygame.sprite import Sprite
+
+
 class Player(Sprite):
-    def __init__(self, x,y):
+    def __init__(self, x, y):
         super().__init__()
         self.right_images = []
         self.left_images = []
         self.idle_right = []
         self.idle_left = []
         # این حلقه برای اضافه کردن تصاویر بازیکن در حال حرکت به سمت راست و چپ نوشته شده است
-        for i in range(1,9):
+        for i in range(1, 9):
             temp_img = pygame.image.load(f"assets/boy/Run ({i}).png")
-            image = pygame.transform.scale(temp_img, (temp_img.get_width() * 0.2, temp_img.get_height()*0.2))
+            image = pygame.transform.scale(temp_img, (temp_img.get_width() * 0.2, temp_img.get_height() * 0.2))
             self.right_images.append(image)
             image = pygame.transform.flip(image, True, False)
             self.left_images.append(image)
 
         # این حلقه برای لود کردن و اضافه کردن عکس های بازیکن که بدون حرکت است می باشد
-        for i in range(1,10):
+        for i in range(1, 10):
             img = pygame.image.load(f"assets/boy/Idle ({i}).png")
-            img = pygame.transform.scale(img, (img.get_width() * 0.2, img.get_height()*0.2))
+            img = pygame.transform.scale(img, (img.get_width() * 0.2, img.get_height() * 0.2))
             self.idle_right.append(img)
             img = pygame.transform.flip(img, True, False)
             self.idle_left.append(img)
 
-        
         self.frame_index = 0
         self.counter = 0
         self.last_animation_time = pygame.time.get_ticks()
         self.image = self.right_images[self.frame_index]
-        self.rect = self.image.get_rect(topleft = (x,y))
+        self.rect = self.image.get_rect(topleft=(x, y))
         self.velocity = 5
         self.direction = 1
         self.moving = False
+        self.vel_y = 0
 
+    def update(self, tiles_map):
+        # pygame.draw.rect(SCREEN, (190, 30, 230), self.rect, 5)
+        if self.direction == 1:
+            rect = pygame.Rect(self.rect.x + 50, self.rect.y + 15, self.image.get_width()- 80, self.image.get_height()-24)
+        if self.direction == -1:
+            rect = pygame.Rect(self.rect.x + 30, self.rect.y + 15, self.image.get_width()- 80, self.image.get_height()-24)
+        pygame.draw.rect(SCREEN, (30, 190, 230), rect, 5)
 
-    def update(self):
+        dx = 0
+        dy = 0
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RIGHT]:
             self.moving = True
             self.direction = 1
-            self.rect.x += self.velocity
+            dx += self.velocity
         if keys[pygame.K_LEFT]:
             self.moving = True
             self.direction = -1
-            self.rect.x -= self.velocity
-        
+            dx -= self.velocity
+
         if not keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]:
             self.moving = False
 
-     
-        self.animation()
+        if keys[pygame.K_SPACE]:
+            self.vel_y = -15
+        self.vel_y += 1
+        dy += self.vel_y
 
+        for tile in tiles_map:
+            if tile[1].colliderect(rect.x, rect.y + dy, self.image.get_width()- 80, self.image.get_height()-24):
+                self.vel_y = 0
+                # TODO
+
+
+
+        self.animation()
+        self.rect.x += dx
+        self.rect.y += dy
+        # if self.rect.bottom >= SCREEN_HEIGHT:
+        #     self.rect.bottom = SCREEN_HEIGHT
 
     def animation(self):
         # ANIMATION_COOLDOWN = 4
