@@ -19,7 +19,7 @@ BG_PIC = pygame.transform.scale(BG_PIC,(SCREEN_WIDTH,SCREEN_HEIGHT))
 DIRT_IMAGE = pygame.image.load("assets/dirt.png")
 GRASS_IMAGE = pygame.image.load("assets/grass.png")
 WATER_IMAGE = pygame.image.load("assets/water.png")
-
+ENEMY_IMAGE = pygame.image.load("assets/img/blob.png")
 
 FPS = 60
 CLOCK = pygame.time.Clock()
