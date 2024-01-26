@@ -66,9 +66,16 @@ class Player(Sprite):
         dy += self.vel_y
 
         for tile in tiles_map:
+            if tile[1].colliderect(rect.x + dx, rect.y, self.image.get_width()- 80, self.image.get_height()-24):
+                dx = 0
             if tile[1].colliderect(rect.x, rect.y + dy, self.image.get_width()- 80, self.image.get_height()-24):
-                self.vel_y = 0
-                # TODO
+                
+                if self.vel_y < 0:
+                    self.vel_y = 0
+                    dy = tile[1].bottom - rect.top
+                else:
+                    self.vel_y = 0
+                    dy = tile[1].top - rect.bottom
 
 
 
