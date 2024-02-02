@@ -16,7 +16,7 @@ while running:
                 running = False
 
     world.draw()
-    player_group.update(world.tiles_map)
+    player_group.update(world.tiles_map, enemy_group)
     player_group.draw(SCREEN)
     enemy_group.update()
     enemy_group.draw(SCREEN)

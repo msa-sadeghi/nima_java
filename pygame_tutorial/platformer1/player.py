@@ -38,9 +38,11 @@ class Player(Sprite):
         self.direction = 1
         self.moving = False
         self.vel_y = 0
+        self.ghost_image = pygame.image.load("assets/img/ghost.png")
+        self.alive = True
 
-    def update(self, tiles_map):
-        pygame.draw.rect(SCREEN, (190, 30, 230), self.rect, 5)
+    def update(self, tiles_map, enemy_group):
+        # pygame.draw.rect(SCREEN, (190, 30, 230), self.rect, 5)
         # if self.direction == 1:
         #     rect = pygame.Rect(self.rect.x + 50, self.rect.y + 15, self.image.get_width()- 80, self.image.get_height()-24)
         # if self.direction == -1:
@@ -49,39 +51,47 @@ class Player(Sprite):
 
         dx = 0
         dy = 0
-        keys = pygame.key.get_pressed()
-        if keys[pygame.K_RIGHT]:
-            self.moving = True
-            self.direction = 1
-            dx += self.velocity
-        if keys[pygame.K_LEFT]:
-            self.moving = True
-            self.direction = -1
-            dx -= self.velocity
+        
+        if self.alive:
+            keys = pygame.key.get_pressed()
+            if keys[pygame.K_RIGHT]:
+                self.moving = True
+                self.direction = 1
+                dx += self.velocity
+            if keys[pygame.K_LEFT]:
+                self.moving = True
+                self.direction = -1
+                dx -= self.velocity
 
-        if not keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]:
-            self.moving = False
+            if not keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]:
+                self.moving = False
 
-        if keys[pygame.K_SPACE]:
-            self.vel_y = -15
-        self.vel_y += 1
-        dy += self.vel_y
+            if keys[pygame.K_SPACE]:
+                self.vel_y = -15
+            self.vel_y += 1
+            dy += self.vel_y
 
-        for tile in tiles_map:
-            if tile[1].colliderect(self.rect.x + dx, self.rect.y, self.image.get_width(), self.image.get_height()):
-                dx = 0
-            if tile[1].colliderect(self.rect.x, self.rect.y + dy, self.image.get_width(), self.image.get_height()):
+            for tile in tiles_map:
+                if tile[1].colliderect(self.rect.x + dx, self.rect.y, self.image.get_width(), self.image.get_height()):
+                    dx = 0
+                if tile[1].colliderect(self.rect.x, self.rect.y + dy, self.image.get_width(), self.image.get_height()):
+                    
+                    if self.vel_y < 0:
+                        self.vel_y = 0
+                        dy = tile[1].bottom - self.rect.top
+                    elif self.vel_y > 0:
+                        self.vel_y = 0
+                        dy = tile[1].top - self.rect.bottom
+            self.animation()
+        
+            if pygame.sprite.spritecollide(self, enemy_group, False):
+                self.alive = False
                 
-                if self.vel_y < 0:
-                    self.vel_y = 0
-                    dy = tile[1].bottom - self.rect.top
-                elif self.vel_y > 0:
-                    self.vel_y = 0
-                    dy = tile[1].top - self.rect.bottom
-
-
-
-        self.animation()
+        if not self.alive:
+            self.image = self.ghost_image
+            if self.rect.top > 200:
+                self.rect.y -= 5
+        
         self.rect.x += dx
         self.rect.y += dy
         # if self.rect.bottom >= SCREEN_HEIGHT:
