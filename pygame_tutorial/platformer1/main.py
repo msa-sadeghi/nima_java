@@ -4,8 +4,9 @@ from levels.level1 import WORLD_DATA
 
 player_group = pygame.sprite.Group()
 enemy_group = pygame.sprite.Group()
+door_group = pygame.sprite.Group()
 
-world = World(WORLD_DATA,player_group, enemy_group)
+world = World(WORLD_DATA,player_group, enemy_group,door_group)
 
 running = True
 while running:
@@ -16,6 +17,7 @@ while running:
                 running = False
 
     world.draw()
+    door_group.draw(SCREEN)
     player_group.update(world.tiles_map, enemy_group)
     player_group.draw(SCREEN)
     enemy_group.update()

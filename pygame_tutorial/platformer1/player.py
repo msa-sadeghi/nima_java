@@ -40,6 +40,8 @@ class Player(Sprite):
         self.vel_y = 0
         self.ghost_image = pygame.image.load("assets/img/ghost.png")
         self.alive = True
+        self.in_air = False
+        self.jumped = False
 
     def update(self, tiles_map, enemy_group):
         # pygame.draw.rect(SCREEN, (190, 30, 230), self.rect, 5)
@@ -66,8 +68,13 @@ class Player(Sprite):
             if not keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]:
                 self.moving = False
 
-            if keys[pygame.K_SPACE]:
+            if keys[pygame.K_SPACE] and not self.jumped and not self.in_air:
                 self.vel_y = -15
+                self.jumped = True
+                self.in_air = True
+            if not keys[pygame.K_SPACE]:
+                self.jumped = False
+                
             self.vel_y += 1
             dy += self.vel_y
 
@@ -82,6 +89,7 @@ class Player(Sprite):
                     elif self.vel_y > 0:
                         self.vel_y = 0
                         dy = tile[1].top - self.rect.bottom
+                        self.in_air = False
             self.animation()
         
             if pygame.sprite.spritecollide(self, enemy_group, False):
