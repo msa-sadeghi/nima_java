@@ -20,6 +20,8 @@ DIRT_IMAGE = pygame.image.load("assets/dirt.png")
 GRASS_IMAGE = pygame.image.load("assets/grass.png")
 WATER_IMAGE = pygame.image.load("assets/water.png")
 ENEMY_IMAGE = pygame.image.load("assets/img/blob.png")
+RESTART_BTN_IMAGE = pygame.image.load("assets/img/restart_btn.png")
+COIN_IMAGE = pygame.transform.scale(pygame.image.load("assets/img/coin.png"),(32,32))
 
 FPS = 60
 CLOCK = pygame.time.Clock()

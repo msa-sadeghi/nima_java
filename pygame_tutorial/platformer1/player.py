@@ -42,8 +42,8 @@ class Player(Sprite):
         self.alive = True
         self.in_air = False
         self.jumped = False
-
-    def update(self, tiles_map, enemy_group):
+        self.next_level = False
+    def update(self, tiles_map, enemy_group, door_group):
         # pygame.draw.rect(SCREEN, (190, 30, 230), self.rect, 5)
         # if self.direction == 1:
         #     rect = pygame.Rect(self.rect.x + 50, self.rect.y + 15, self.image.get_width()- 80, self.image.get_height()-24)
@@ -94,6 +94,8 @@ class Player(Sprite):
         
             if pygame.sprite.spritecollide(self, enemy_group, False):
                 self.alive = False
+            if pygame.sprite.spritecollide(self, door_group, False):
+                self.next_level = True
                 
         if not self.alive:
             self.image = self.ghost_image

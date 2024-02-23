@@ -1,15 +1,17 @@
+from coin import Coin
 from constants import *
 from player import Player
 from enemy import Enemy
 from door import Door
 class World:
-    def __init__(self, data, player_group, enemy_group, door_group):
+    def __init__(self, data, player_group, enemy_group, door_group, coin_group):
         self.tiles_map = []
         self.image = BG_PIC
         self.rect = self.image.get_rect()
         self.rect.topleft = (0,0)
         self.enemy_group = enemy_group
         self.door_group = door_group
+        self.coin_group = coin_group
 
         for i in range(len(data)):
             for j in range(len(data[i])):
@@ -34,6 +36,9 @@ class World:
                 if data[i][j] == 6:
                     door = Door(j * TILE_SIZE, i * TILE_SIZE)
                     self.door_group.add(door)
+                if data[i][j] == 7:
+                    coin = Coin(COIN_IMAGE, j * TILE_SIZE, i * TILE_SIZE)
+                    self.coin_group.add(coin)
 
         
 
