@@ -43,6 +43,7 @@ class Player(Sprite):
         self.in_air = False
         self.jumped = False
         self.next_level = False
+        self.score = 0
     def update(self, tiles_map, enemy_group, door_group):
         # pygame.draw.rect(SCREEN, (190, 30, 230), self.rect, 5)
         # if self.direction == 1:

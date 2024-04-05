@@ -13,6 +13,12 @@ level = 1
 
 next_level_time = pygame.time.get_ticks()
 
+def draw_text(text, color, x,y, font):
+    t = font.render(text, True, color)
+    r = t.get_rect(topleft=(x,y))
+    SCREEN.blit(t, r)
+
+
 
 MAX_LEVEL = 10
 if os.path.exists(f"levels/level{level}"):
@@ -34,6 +40,7 @@ def next_level():
         WORLD_DATA = []
     return World(WORLD_DATA,player_group, enemy_group,door_group,coin_group)
 f = pygame.font.SysFont("Arial", 36)        
+f24 = pygame.font.SysFont("Arial", 24)        
 next_level_text =  f.render(f"welcome to level {level}", True, (255,0,0))
 next_level_rect = next_level_text.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2))  
 
@@ -47,6 +54,7 @@ while running:
                 running = False
     next_level_text =  f.render(f"welcome to level {level}", True, (255,0,0))
     world.draw()
+    draw_text(f"Score: {player_group.sprites()[0].score}", (210, 190, 210), 10, 7, f24)
     door_group.draw(SCREEN)
     player_group.update(world.tiles_map, enemy_group,door_group)
     player_group.draw(SCREEN)
