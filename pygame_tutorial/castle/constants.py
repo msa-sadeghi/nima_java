@@ -1,4 +1,5 @@
 import pygame
+
 pygame.init()
 screen = pygame.display.set_mode()
 SCREEN_WIDTH = screen.get_width()
@@ -22,3 +23,19 @@ repair_img = pygame.image.load("assets/repair.png")
 
 shoot_sound = pygame.mixer.Sound("assets/jump.wav")
 
+all_enemies_images = []
+all_enemies_types = ("knight", "goblin", "purple_goblin", "red_goblin")
+all_enemies_healths = (1, 2, 3, 4)
+all_animations_types = ("walk", "attack", "death")
+for enemy in all_enemies_types:
+    enemy_animation = []
+    for anime in all_animations_types:
+        animation_images = []
+        for i in range(20):
+            img = pygame.image.load(f"assets/enemies/{enemy}/{anime}/{i}.png")
+            w = img.get_width()
+            h = img.get_height()
+            img = pygame.transform.scale(img, (w * 0.6, h * 0.6))
+            animation_images.append(img)
+        enemy_animation.append(animation_images)
+    all_enemies_images.append(enemy_animation)
