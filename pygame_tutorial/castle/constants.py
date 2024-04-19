@@ -35,7 +35,7 @@ for enemy in all_enemies_types:
             img = pygame.image.load(f"assets/enemies/{enemy}/{anime}/{i}.png")
             w = img.get_width()
             h = img.get_height()
-            img = pygame.transform.scale(img, (w * 0.6, h * 0.6))
+            img = pygame.transform.scale(img, (w * 0.3, h * 0.3))
             animation_images.append(img)
         enemy_animation.append(animation_images)
     all_enemies_images.append(enemy_animation)
