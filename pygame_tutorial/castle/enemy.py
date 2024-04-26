@@ -12,15 +12,31 @@ class Enemy(Sprite):
         self.health = health
         self.speed = speed
         self.last_image_chng = pygame.time.get_ticks()
+        self.last_injury_time = pygame.time.get_ticks()
         group.add(self)
-    def update(self):
+    def update(self, castle):
 
-        self.move()
-        self.animation()
+        self.move(castle)
+        self.next_costume()
 
-    def move(self):
-        self.rect.x += self.speed
-    def animation(self):
+    def move(self, castle):
+        if self.rect.right >= castle.rect.left:
+            self.change_action(1)
+            
+        if self.action == 0:
+            self.rect.x += self.speed
+        if self.action == 1:
+            if pygame.time.get_ticks() - self.last_injury_time > 2500:
+                self.last_injury_time = pygame.time.get_ticks()
+                castle.health -= 10
+    
+            
+    
+    def change_action(self, new_action):
+        if new_action != self.action:
+            self.action = new_action
+    
+    def next_costume(self):
         self.image = self.all_images[self.action][self.image_number]
         if pygame.time.get_ticks() - self.last_image_chng > 100:
             self.last_image_chng = pygame.time.get_ticks()

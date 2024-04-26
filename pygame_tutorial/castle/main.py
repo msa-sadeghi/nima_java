@@ -36,7 +36,7 @@ while running:
     new_castle.fire(bullet_group)
     bullet_group.update()         
     bullet_group.draw(screen)
-    enemy_group.update()
+    enemy_group.update(new_castle)
     enemy_group.draw(screen)
     pygame.display.update()
     clock.tick(FPS)
