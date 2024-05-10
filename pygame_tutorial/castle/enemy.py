@@ -10,25 +10,33 @@ class Enemy(Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
         self.health = health
+        self.alive = True
         self.speed = speed
         self.last_image_chng = pygame.time.get_ticks()
         self.last_injury_time = pygame.time.get_ticks()
         group.add(self)
-    def update(self, castle):
+    def update(self, castle, bullet_group):
 
-        self.move(castle)
+        self.move(castle, bullet_group)
         self.next_costume()
 
-    def move(self, castle):
-        if self.rect.right >= castle.rect.left:
-            self.change_action(1)
-            
-        if self.action == 0:
-            self.rect.x += self.speed
-        if self.action == 1:
-            if pygame.time.get_ticks() - self.last_injury_time > 2500:
-                self.last_injury_time = pygame.time.get_ticks()
-                castle.health -= 10
+    def move(self, castle, bullet_group):
+        if self.alive:
+            if self.rect.right >= castle.rect.left:
+                self.change_action(1)
+            if pygame.sprite.spritecollide(self, bullet_group, True)    :
+                self.health -= 1
+                
+            if self.health <= 0:
+                self.change_action(2)
+                self.alive = False
+                
+            if self.action == 0:
+                self.rect.x += self.speed
+            if self.action == 1:
+                if pygame.time.get_ticks() - self.last_injury_time > 2500:
+                    self.last_injury_time = pygame.time.get_ticks()
+                    castle.health -= 10
     
             
     
@@ -42,4 +50,7 @@ class Enemy(Sprite):
             self.last_image_chng = pygame.time.get_ticks()
             self.image_number += 1
             if self.image_number >= len(self.all_images[self.action]):
-                self.image_number = 0
+                if self.action == 2:
+                    self.image_number = len(self.all_images[self.action]) - 1
+                else:
+                    self.image_number = 0
