@@ -10,4 +10,9 @@ class MousePointer:
         pygame.mouse.set_visible(False)
 
     def draw(self, screen):
-        screen.blit(self.image, pygame.mouse.get_pos())
+        pos = pygame.mouse.get_pos()
+        if pos[1] > 70:
+            pygame.mouse.set_visible(False)
+            screen.blit(self.image, pos)
+        else:
+            pygame.mouse.set_visible(True)

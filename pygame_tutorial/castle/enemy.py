@@ -10,15 +10,28 @@ class Enemy(Sprite):
         self.rect = self.image.get_rect()
         self.rect.topleft = (x, y)
         self.health = health
+        self.max_health = health
         self.alive = True
         self.speed = speed
         self.last_image_chng = pygame.time.get_ticks()
         self.last_injury_time = pygame.time.get_ticks()
         group.add(self)
-    def update(self, castle, bullet_group):
+    def update(self, castle, bullet_group,screen, f):
 
         self.move(castle, bullet_group)
         self.next_costume()
+        if self.alive:
+            # if enemy health is less than or equal to half -> text color : red
+            # else -> text color : blue
+            # excerise 28  book: PythonProgrammingExercisesGentlyExplained
+            # show enemy health
+            if self.health <= self.max_health/2:
+                text = f.render(f"{self.health}", True, (255,0,0))
+            else:
+                text = f.render(f"{self.health}", True, (0,0,255))
+                
+            rect = text.get_rect(center=(self.rect.centerx - self.rect.size[0]/6, self.rect.top))
+            screen.blit(text, rect)
 
     def move(self, castle, bullet_group):
         if self.alive:
@@ -27,16 +40,19 @@ class Enemy(Sprite):
             if pygame.sprite.spritecollide(self, bullet_group, True)    :
                 self.health -= 1
                 
+                
             if self.health <= 0:
                 self.change_action(2)
                 self.alive = False
+                castle.money += 200
+                castle.score += 200
                 
             if self.action == 0:
                 self.rect.x += self.speed
             if self.action == 1:
                 if pygame.time.get_ticks() - self.last_injury_time > 2500:
                     self.last_injury_time = pygame.time.get_ticks()
-                    castle.health -= 10
+                    castle.health -= 100
     
             
     
