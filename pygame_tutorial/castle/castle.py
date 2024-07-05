@@ -17,6 +17,8 @@ class Castle:
         self.fired = False
         self.money = 0
         self.score = 0
+        self.shoot_sound = pygame.mixer.Sound("assets/shoot.wav")
+        self.shoot_sound.set_volume(0.2)
         
     def draw(self, screen):
         if self.health <= 250:
@@ -32,6 +34,7 @@ class Castle:
         x_dis = m_pos[0] - self.rect.midleft[0]
         y_dis = -(m_pos[1] - self.rect.midleft[1])
         if pygame.mouse.get_pressed()[0] and not self.fired and pygame.mouse.get_pos()[1] > 80:
+            self.shoot_sound.play()
             self.fired = True
             Bullet(self.rect.midleft[0],
                    self.rect.midleft[1],

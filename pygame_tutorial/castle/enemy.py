@@ -16,6 +16,7 @@ class Enemy(Sprite):
         self.last_image_chng = pygame.time.get_ticks()
         self.last_injury_time = pygame.time.get_ticks()
         group.add(self)
+        self.hit_sound = pygame.mixer.Sound("assets/hit.wav")
     def update(self, castle, bullet_group,screen, f):
 
         self.move(castle, bullet_group)
@@ -39,6 +40,7 @@ class Enemy(Sprite):
                 self.change_action(1)
             if pygame.sprite.spritecollide(self, bullet_group, True)    :
                 self.health -= 1
+                self.hit_sound.play()
                 
                 
             if self.health <= 0:

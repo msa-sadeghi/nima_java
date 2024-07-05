@@ -7,16 +7,29 @@ from mousepointer import MousePointer
 from enemy import Enemy
 import random
 from button import Button
+from tower import Tower
 
-
+pygame.init()
 bullet_group = pygame.sprite.Group()
 enemy_group = pygame.sprite.Group()
+tower_group = pygame.sprite.Group()
 new_castle = Castle()
 MAX_DIFFICULTY = 5
 level_difficulty = 0
 game_world = World(bg_img)
 mouse = MousePointer()
 last_spawn_time = pygame.time.get_ticks()
+
+TOWER_COST = 2000
+MAX_TOWERS = 4
+TOWER_POSITIONS = (
+    (SCREEN_WIDTH - 220, SCREEN_HEIGHT - 200),
+    (SCREEN_WIDTH - 180, SCREEN_HEIGHT - 100),
+    (SCREEN_WIDTH - 160, SCREEN_HEIGHT - 100),
+    (SCREEN_WIDTH - 140, SCREEN_HEIGHT - 100),
+)
+
+TOWERS = []
 
 font = pygame.font.SysFont("arial", 32)
 font22 = pygame.font.SysFont("arial", 18)
@@ -30,7 +43,10 @@ def show_text(txt, x,y, font):
 
 level_completed = False
 level = 1
-repair_button = Button(x=SCREEN_WIDTH - 150, y=10, image=repair_img)
+repair_button = Button(x=SCREEN_WIDTH - 150, y=10, image=repair_img, scale=0.4)
+armour_button = Button(x=SCREEN_WIDTH - 100, y=10, image=armour_img, scale=1)
+
+tower_button = Button(x=SCREEN_WIDTH - 50, y=10, image=tower_100_img, scale=0.07)
 running = True
 while running:
     
@@ -74,6 +90,19 @@ while running:
     if repair_button.click():
         
         new_castle.repair()
+        
+    armour_button.draw(screen)  
+    # TODO  
+    tower_button.draw(screen)
+    if tower_button.click():
+        if new_castle.money >= 0 and len(TOWERS) < 4:
+            Tower(
+                TOWER_POSITIONS[len(TOWERS) - 1][0],
+                TOWER_POSITIONS[len(TOWERS) - 1][1],
+                100,
+                tower_group
+                )
+    
     show_text(f"Health: {new_castle.health}", SCREEN_WIDTH - 230, SCREEN_HEIGHT-180, font)
     show_text(f"Score: {new_castle.score}", 60, 20, font)
     show_text(f"Money: {new_castle.money}", 310, 20, font)
@@ -83,6 +112,8 @@ while running:
     new_castle.fire(bullet_group)
     bullet_group.update()         
     bullet_group.draw(screen)
+    tower_group.update()         
+    tower_group.draw(screen)
     enemy_group.update(new_castle, bullet_group, screen, font)
     enemy_group.draw(screen)
     pygame.display.update()

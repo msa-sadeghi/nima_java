@@ -1,10 +1,10 @@
 import pygame
 class Button:
-    def __init__(self,image, x,y):
+    def __init__(self,image, x,y, scale):
         image_width = image.get_width()
         image_height = image.get_height()
         
-        self.image = pygame.transform.scale(image, (image_width * 0.4, image_height * 0.4))
+        self.image = pygame.transform.scale(image, (image_width * scale, image_height * scale))
         self.rect = self.image.get_rect(topleft=(x,y))
         
         
