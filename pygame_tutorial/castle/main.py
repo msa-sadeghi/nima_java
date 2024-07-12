@@ -23,14 +23,14 @@ last_spawn_time = pygame.time.get_ticks()
 TOWER_COST = 2000
 MAX_TOWERS = 4
 TOWER_POSITIONS = (
-    (SCREEN_WIDTH - 220, SCREEN_HEIGHT - 200),
+    (SCREEN_WIDTH - 200, SCREEN_HEIGHT - 200),
     (SCREEN_WIDTH - 180, SCREEN_HEIGHT - 100),
-    (SCREEN_WIDTH - 160, SCREEN_HEIGHT - 100),
-    (SCREEN_WIDTH - 140, SCREEN_HEIGHT - 100),
+    (SCREEN_WIDTH - 60, SCREEN_HEIGHT - 100),
+    (SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100),
 )
 
 TOWERS = []
-
+t_c = 0
 font = pygame.font.SysFont("arial", 32)
 font22 = pygame.font.SysFont("arial", 18)
 
@@ -45,11 +45,11 @@ level_completed = False
 level = 1
 repair_button = Button(x=SCREEN_WIDTH - 150, y=10, image=repair_img, scale=0.4)
 armour_button = Button(x=SCREEN_WIDTH - 100, y=10, image=armour_img, scale=1)
-
+tower_spawn = False
 tower_button = Button(x=SCREEN_WIDTH - 50, y=10, image=tower_100_img, scale=0.07)
 running = True
 while running:
-    
+    print("mouse position", pygame.mouse.get_pos())
     for event in pygame.event.get():
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
@@ -95,13 +95,17 @@ while running:
     # TODO  
     tower_button.draw(screen)
     if tower_button.click():
-        if new_castle.money >= 0 and len(TOWERS) < 4:
-            Tower(
-                TOWER_POSITIONS[len(TOWERS) - 1][0],
-                TOWER_POSITIONS[len(TOWERS) - 1][1],
+        if new_castle.money >= 0 and len(TOWERS) < MAX_TOWERS and not tower_spawn:
+            tower_spawn = True
+    elif tower_spawn and pygame.mouse.get_pressed()[0]:
+        tower_spawn = False
+        Tower(
+                pygame.mouse.get_pos()[0],
+                pygame.mouse.get_pos()[1],
                 100,
                 tower_group
                 )
+        t_c += 1
     
     show_text(f"Health: {new_castle.health}", SCREEN_WIDTH - 230, SCREEN_HEIGHT-180, font)
     show_text(f"Score: {new_castle.score}", 60, 20, font)
