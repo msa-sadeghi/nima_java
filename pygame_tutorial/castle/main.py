@@ -22,14 +22,6 @@ last_spawn_time = pygame.time.get_ticks()
 
 TOWER_COST = 2000
 MAX_TOWERS = 4
-TOWER_POSITIONS = (
-    (SCREEN_WIDTH - 200, SCREEN_HEIGHT - 200),
-    (SCREEN_WIDTH - 180, SCREEN_HEIGHT - 100),
-    (SCREEN_WIDTH - 60, SCREEN_HEIGHT - 100),
-    (SCREEN_WIDTH - 100, SCREEN_HEIGHT - 100),
-)
-
-TOWERS = []
 t_c = 0
 font = pygame.font.SysFont("arial", 32)
 font22 = pygame.font.SysFont("arial", 18)
@@ -95,7 +87,7 @@ while running:
     # TODO  
     tower_button.draw(screen)
     if tower_button.click():
-        if new_castle.money >= 0 and len(TOWERS) < MAX_TOWERS and not tower_spawn:
+        if new_castle.money >= 0 and t_c < MAX_TOWERS and not tower_spawn:
             tower_spawn = True
     elif tower_spawn and pygame.mouse.get_pressed()[0]:
         tower_spawn = False
@@ -116,9 +108,9 @@ while running:
     new_castle.fire(bullet_group)
     bullet_group.update()         
     bullet_group.draw(screen)
-    tower_group.update()         
+    tower_group.update(enemy_group, screen)         
     tower_group.draw(screen)
-    enemy_group.update(new_castle, bullet_group, screen, font)
+    enemy_group.update(new_castle, bullet_group, screen, font, tower_group)
     enemy_group.draw(screen)
     pygame.display.update()
     clock.tick(FPS)

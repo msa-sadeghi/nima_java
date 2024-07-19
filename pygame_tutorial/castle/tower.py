@@ -17,6 +17,12 @@ class Tower(Sprite):
         
         self.health = health
         group.add(self)
+        self.font = pygame.font.SysFont("arial", 15)
         
-    def update(self):
-        pass
+    def update(self, enemy_group, screen):
+        health_text = self.font.render(f"{self.health}", True, (0,0,0))
+        health_rect = health_text.get_rect()
+        health_rect.bottom = self.rect.top
+        health_rect.centerx = self.rect.centerx
+        screen.blit(health_text, health_rect)
+        

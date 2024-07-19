@@ -15,11 +15,12 @@ class Enemy(Sprite):
         self.speed = speed
         self.last_image_chng = pygame.time.get_ticks()
         self.last_injury_time = pygame.time.get_ticks()
+        self.last_tower_injury_time = pygame.time.get_ticks()
         group.add(self)
         self.hit_sound = pygame.mixer.Sound("assets/hit.wav")
-    def update(self, castle, bullet_group,screen, f):
+    def update(self, castle, bullet_group,screen, f, tower_group):
 
-        self.move(castle, bullet_group)
+        self.move(castle, bullet_group, tower_group)
         self.next_costume()
         if self.alive:
             # if enemy health is less than or equal to half -> text color : red
@@ -34,8 +35,17 @@ class Enemy(Sprite):
             rect = text.get_rect(center=(self.rect.centerx - self.rect.size[0]/6, self.rect.top))
             screen.blit(text, rect)
 
-    def move(self, castle, bullet_group):
+    def move(self, castle, bullet_group, tower_group):
         if self.alive:
+            collided_tower = pygame.sprite.spritecollideany(self, tower_group)
+            if collided_tower:
+                if pygame.time.get_ticks() - self.last_tower_injury_time > 1000:
+                    self.last_tower_injury_time = pygame.time.get_ticks()
+                    collided_tower.health -= 20
+                    if collided_tower.health <= 0:
+                        collided_tower.health = 0
+                    
+                
             if self.rect.right >= castle.rect.left:
                 self.change_action(1)
             if pygame.sprite.spritecollide(self, bullet_group, True)    :
