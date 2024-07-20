@@ -42,7 +42,7 @@ class Enemy(Sprite):
                 if pygame.time.get_ticks() - self.last_tower_injury_time > 1000:
                     self.last_tower_injury_time = pygame.time.get_ticks()
                     collided_tower.health -= 20
-                    if collided_tower.health <= 0:
+                    if collided_tower.health < 0:
                         collided_tower.health = 0
                     
                 
