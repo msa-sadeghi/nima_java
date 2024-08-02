@@ -18,3 +18,5 @@ while running:
     clock.tick(FPS)
     
     
+# -> player1 animation
+# d  player2 animation
