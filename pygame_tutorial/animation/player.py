@@ -37,7 +37,17 @@ class Player(Sprite):
             self.frame_index += 1
             if self.frame_index >= len(self.all_images[self.action]):
                 self.frame_index = 0
+    def move(self):
+        dx = 0
+        dy = 0
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            dx -= 5
+        if keys[pygame.K_RIGHT]:
+            dx += 5
 
+        self.rect.x += dx
+        self.rect.y += dy
 
 
 
