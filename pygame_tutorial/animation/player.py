@@ -23,8 +23,22 @@ class Player(Sprite):
         self.frame_index = 0
         self.image = self.all_images['Idle'][self.frame_index]
         self.rect = self.image.get_rect(topleft=(x,y))
+        self.last_image_time = pygame.time.get_ticks()
+        self.action = "Idle"
     def draw(self, screen):
-        screen.blit(self.image, self.rect)
+        img = self.all_images[self.action][self.frame_index]
+        screen.blit(img, self.rect)
+        self.animation()
+
+
+    def animation(self):
+        if pygame.time.get_ticks() - self.last_image_time >= 100:
+            self.last_image_time = pygame.time.get_ticks()
+            self.frame_index += 1
+            if self.frame_index >= len(self.all_images[self.action]):
+                self.frame_index = 0
+
+
 
 
 
