@@ -17,7 +17,11 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     screen.fill((0, 0, 0))
-    if my_player.shoot:
+    if my_player.in_air and my_player.shoot:
+        my_player.change_animation("JumpShoot")
+    elif my_player.shoot and not my_player.idle:
+        my_player.change_animation("RunShoot")
+    elif my_player.shoot:
         my_player.change_animation('Shoot')
     elif my_player.in_air:
         my_player.change_animation('Jump')
@@ -27,7 +31,7 @@ while running:
         my_player.change_animation('Idle')
     else:
         my_player.change_animation('Run')
-    my_player.draw(screen)
+    my_player.draw(screen) 
     my_player.move()
     pygame.display.update()
     clock.tick(FPS)
