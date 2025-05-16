@@ -47,7 +47,7 @@ for i in range(len(tiles_images)):
         r += 1
         c = 0
 
-
+selected_button_index = 0
 FPS = 60
 running = True  
 while running:
@@ -59,8 +59,10 @@ while running:
     draw_lines()
     pygame.draw.rect(screen, "lightblue", (screen_width, 0, SIDE_MARGIN, screen_height + LOWER_MARGIN))  # Draw the black rectangle
     pygame.draw.rect(screen, "lightblue", (0, screen_height, screen_width, LOWER_MARGIN))  # Draw the black rectangle
-    for btn in buttons_list:
-        btn.update(screen)
+    for i,btn in enumerate(buttons_list):
+       if btn.update(screen) == True:
+            selected_button_index = i
+    pygame.draw.rect(screen, "orangered", buttons_list[selected_button_index].rect, 3)
     pygame.display.flip()  # Update the display
     clock.tick(FPS)  # Control the frame rate
 pygame.quit()
