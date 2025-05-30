@@ -16,7 +16,7 @@ def draw_lines():
     for i in range(ROWS + 1):
         pygame.draw.line(screen, "brown", (0, i * TILE_SIZE), (screen_width, i *TILE_SIZE))
     for i in range(COLS + 1):
-        pygame.draw.line(screen, "brown", (i * TILE_SIZE, 0), (i *TILE_SIZE, screen_height))
+        pygame.draw.line(screen, "brown", (i * TILE_SIZE -scroll, 0), (i *TILE_SIZE -scroll, screen_height))
 
 
 objects_images = []
@@ -59,21 +59,51 @@ def draw_world():
     for i in range(ROWS):
         for j in range(COLS):
             if world_map[i][j] != -1:
-                screen.blit(buttons_list[world_map[i][j]].image, (j * TILE_SIZE, i * TILE_SIZE))
+                screen.blit(buttons_list[world_map[i][j]].image, (j * TILE_SIZE - scroll, i * TILE_SIZE))
 
+scroll = 0
+scroll_left, scroll_right = (False, False)
 
+f = pygame.font.SysFont('arial', 22)
+level = 1
+level_text = f.render(f"level: {level}", True, "black")
+level_rect = level_text.get_rect(center = ( 50, screen_height + 50))
+
+arrow_image_up = pygame.image.load("./arrow.png")
+arrow_image_up = pygame.transform.rotate(arrow_image_up, -90)
+arrow_image_up = pygame.transform.scale_by(arrow_image_up, 0.2)
+
+arrow_up_btn = Button(arrow_image_up, 200, screen_height + 25,"btn")
 
 running = True  
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
-
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT:
+                scroll_left = True
+            if event.key == pygame.K_RIGHT:
+                scroll_right = True
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT:
+                scroll_left = False
+            if event.key == pygame.K_RIGHT:
+                scroll_right = False
+    
+    if scroll_left and scroll > 0:
+        scroll -= 5
+    elif scroll_right:
+        scroll += 5
+    
+    
     screen.fill("white")  # Fill the screen with black
     draw_lines()
+    draw_world()
     pygame.draw.rect(screen, "lightblue", (screen_width, 0, SIDE_MARGIN, screen_height + LOWER_MARGIN))  # Draw the black rectangle
     pygame.draw.rect(screen, "lightblue", (0, screen_height, screen_width, LOWER_MARGIN))  # Draw the black rectangle
-    draw_world()
+    screen.blit(level_text, level_rect)
+    arrow_up_btn.update(screen)
     for i,btn in enumerate(buttons_list):
        if btn.update(screen) == True:
             selected_button_index = i
@@ -81,9 +111,11 @@ while running:
     mouse_pos = pygame.mouse.get_pos()
     if  mouse_pos[0] < screen_width and mouse_pos[1] < screen_height:
         r = mouse_pos[1] //  TILE_SIZE
-        c = mouse_pos[0] //  TILE_SIZE
+        c = (mouse_pos[0] + scroll) //  TILE_SIZE
         if pygame.mouse.get_pressed()[0]:
             world_map[r][c] = selected_button_index
+        elif pygame.mouse.get_pressed()[2]:
+            world_map[r][c] = -1
     
     pygame.draw.rect(screen, "orangered", buttons_list[selected_button_index].rect, 3)
     pygame.display.flip()  # Update the display
