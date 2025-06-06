@@ -73,7 +73,9 @@ arrow_image_up = pygame.image.load("./arrow.png")
 arrow_image_up = pygame.transform.rotate(arrow_image_up, -90)
 arrow_image_up = pygame.transform.scale_by(arrow_image_up, 0.2)
 
+arrow_image_down = pygame.transform.rotate(arrow_image_up, 180)
 arrow_up_btn = Button(arrow_image_up, 200, screen_height + 25,"btn")
+arrow_down_btn = Button(arrow_image_down, 270, screen_height + 25,"btn")
 
 running = True  
 while running:
@@ -102,8 +104,12 @@ while running:
     draw_world()
     pygame.draw.rect(screen, "lightblue", (screen_width, 0, SIDE_MARGIN, screen_height + LOWER_MARGIN))  # Draw the black rectangle
     pygame.draw.rect(screen, "lightblue", (0, screen_height, screen_width, LOWER_MARGIN))  # Draw the black rectangle
+    level_text = f.render(f"level: {level}", True, "black")
     screen.blit(level_text, level_rect)
-    arrow_up_btn.update(screen)
+    if arrow_up_btn.update(screen):
+        level += 1
+    if arrow_down_btn.update(screen) and level > 0:
+        level -= 1
     for i,btn in enumerate(buttons_list):
        if btn.update(screen) == True:
             selected_button_index = i
