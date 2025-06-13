@@ -1,11 +1,17 @@
 import pygame
 from player import Player
 pygame.init()
-
+import pickle
 WIDTH = 1000
 HEIGHT = 600
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("My Game")
+
+world_map = []
+def load_level(level):
+    global world_map
+    with open(f"level{level}", "rb") as f:
+        world_map = pickle.load(f)
 
 
 my_player = Player(100, 300)

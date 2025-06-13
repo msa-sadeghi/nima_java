@@ -2,6 +2,7 @@ import pygame
 pygame.init()
 import os
 from button import Button
+import pickle
 screen_width = 1000
 SIDE_MARGIN = 400
 screen_height = 640
@@ -77,6 +78,24 @@ arrow_image_down = pygame.transform.rotate(arrow_image_up, 180)
 arrow_up_btn = Button(arrow_image_up, 200, screen_height + 25,"btn")
 arrow_down_btn = Button(arrow_image_down, 270, screen_height + 25,"btn")
 
+save_btn_image = pygame.image.load("./save.png")
+save_btn_image = pygame.transform.scale(save_btn_image, (50, 50))
+load_btn_image = pygame.image.load("./load.png")
+load_btn_image = pygame.transform.scale(load_btn_image, (50, 50))
+
+save_btn = Button(save_btn_image, 370, screen_height + 25,"btn")
+load_btn = Button(load_btn_image, 440, screen_height + 25,"btn")
+
+
+def save_level(level_number):
+    with open(f"level{level_number}", "wb") as f:
+        pickle.dump(world_map,  f)
+
+def load_level(level):
+    global world_map
+    with open(f"level{level}", "rb") as f:
+        world_map = pickle.load(f)
+
 running = True  
 while running:
     for event in pygame.event.get():
@@ -97,8 +116,6 @@ while running:
         scroll -= 5
     elif scroll_right:
         scroll += 5
-    
-    
     screen.fill("white")  # Fill the screen with black
     draw_lines()
     draw_world()
@@ -108,8 +125,13 @@ while running:
     screen.blit(level_text, level_rect)
     if arrow_up_btn.update(screen):
         level += 1
-    if arrow_down_btn.update(screen) and level > 0:
+    if arrow_down_btn.update(screen) and level > 1:
         level -= 1
+
+    if save_btn.update(screen):
+        save_level(level)
+    if load_btn.update(screen):
+        load_level(level)
     for i,btn in enumerate(buttons_list):
        if btn.update(screen) == True:
             selected_button_index = i
