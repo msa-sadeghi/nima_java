@@ -1,5 +1,7 @@
+from bomb import Bomb
+TILE_SIZE = 50
 class World:
-    def __init__(self, world_map):
+    def __init__(self, world_map, images, bomb_group):
         self.obstacle = []
         self.doors = []
         self.bombs = []
@@ -10,8 +12,12 @@ class World:
         for i in range(len(world_map)):
             for j in range(len(world_map[i])):
                 if world_map[i][j] == 0:
-                    pass
-                    # TODO create bomb Object and add to the specified list
+                    b = Bomb(
+                        images[world_map[i][j]],
+                        j * TILE_SIZE , i * TILE_SIZE,
+                        bomb_group
+                    )
+                    self.bombs.append(b)
                 elif world_map[i][j] == 1:
                     pass
                     # TODO create energy object and add to the specified list
@@ -28,5 +34,6 @@ class World:
                     pass
                     # TODO create door object
                 elif world_map[i][j] == (13, 14,15,16,23,24,31,32,33,34,35,36):
+                    pass
                    
 
