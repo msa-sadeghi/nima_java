@@ -5,11 +5,11 @@ def show_lessons(frame, subject, on_select_lesson, on_back):
         widget.destroy()
 
     tk.Label(frame, text=f"فصل های درس {subject}",
-             bg="lightblue", fg="purple", font=("ZahraRoosta", 14)).pack(pady=10)
+             bg="lightblue", fg="purple", font=("B Nazanin", 14)).pack(pady=10)
     
 
     for chapter in lessons.get(subject):
 
-        tk.Button(frame, text=chapter, font=("ZahraRoosta", 12)).pack(pady=10)
+        tk.Button(frame, text=chapter, font=("B Nazanin", 12)).pack(pady=10)
     if on_back:
-        tk.Button(frame, text="بازکشت",font=("ZahraRoosta", 12), command=on_back).pack(pady=10)
+        tk.Button(frame, text="بازکشت",font=("B Nazanin", 12), command=on_back).pack(pady=10)
