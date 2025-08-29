@@ -2,7 +2,9 @@ lessons = {
     "زیست": {
         "قلب": {
             "content":"قلب یک عضو حیاتی در بدن می باشد قلب یک عضو حیاتی در بدن می باشدقلب یک عضو حیاتی در بدن می باشد",
-            "icon" :"./data/assets/images/heart.png"
+            "icon" :"./data/assets/images/heart.png",
+            "image":"./data/assets/images/heart.png",
+            "video":"./data/assets/videos/lesson.mp4"
         },
         "گوارش": {
             "content":"گوارش یک عضو حیاتی در بدن می باشد"
