@@ -34,7 +34,7 @@ def show_chapter_content(frame, subject, chapter, on_back):
                 command=lambda : show_lessons(frame, subject, None, on_back)).pack(pady=10)
 
 
-def show_lessons(frame, subject, on_select_lesson, on_back):
+def show_lessons(frame, subject, on_select_lesson, on_back,on_home):
     for widget in  frame.winfo_children():
         widget.destroy()
 
@@ -44,3 +44,5 @@ def show_lessons(frame, subject, on_select_lesson, on_back):
                    command=lambda c=chapter : show_chapter_content(frame, subject, c, on_back)).pack(pady=10)
     if on_back:
         ttk.Button(frame, text="بازگشت",bootstyle=(INFO, OUTLINE), command=on_back).pack(pady=10)
+    
+    ttk.Button(frame, text="خانه",bootstyle=(INFO, OUTLINE), command=on_home).pack(pady=10)

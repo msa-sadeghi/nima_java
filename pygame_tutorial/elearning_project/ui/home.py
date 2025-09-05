@@ -3,7 +3,7 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 from ui.lesson_selector import show_lessons
 
-def show_home(frame, on_select_lesson, on_back):
+def show_home(frame, on_select_lesson, on_back, on_home):
     for widget in frame.winfo_children():
         widget.destroy()
 
@@ -16,5 +16,5 @@ def show_home(frame, on_select_lesson, on_back):
         ttk.Button(frame, text=subject,
                    width=20,
                    bootstyle=(INFO, OUTLINE),
-                   command = lambda s= subject:show_lessons(frame, s, on_select_lesson, on_back)
+                   command = lambda s= subject:show_lessons(frame, s, on_select_lesson, on_back, on_home)
                    ).pack(pady=5)

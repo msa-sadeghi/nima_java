@@ -4,7 +4,9 @@ from ui.home import show_home
 import os
 
 def go_back():
-        show_home(frame, on_select_lesson, go_back)
+        show_home(frame, on_select_lesson, go_back, go_home)
+def go_home():
+        show_home(frame, on_select_lesson,go_back, go_home)
 
 def on_select_lesson(frame, subject):
         print(f"lesson{subject}")
@@ -24,7 +26,7 @@ frame = tk.Frame(root)
 # frame.configure(bg="lightblue")
 frame.pack(expand=True, fill="both")
 
-show_home(frame, on_select_lesson, go_back)
+show_home(frame, on_select_lesson, go_back, go_home)
 
 
 root.mainloop()
