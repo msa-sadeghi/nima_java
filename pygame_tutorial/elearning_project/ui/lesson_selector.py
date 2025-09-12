@@ -7,7 +7,7 @@ import os
 def play_video(video_path):
     os.startfile(os.path.abspath(video_path))
 
-def show_chapter_content(frame, subject, chapter, on_back):
+def show_chapter_content(frame, subject, chapter, on_back, on_home):
     for widget in  frame.winfo_children():
         widget.destroy()
     content = lessons[subject][chapter].get("content", "محتوایی برای این فصل وجود ندارد")
@@ -31,7 +31,9 @@ def show_chapter_content(frame, subject, chapter, on_back):
                 command=lambda : play_video(video_path)).pack(pady=10)
 
     ttk.Button(frame, text="بازگشت",bootstyle=(INFO, OUTLINE), width=20,
-                command=lambda : show_lessons(frame, subject, None, on_back)).pack(pady=10)
+                command=lambda : show_lessons(frame, subject, None, on_back, on_home)).pack(pady=10)
+    ttk.Button(frame, text="خانه",bootstyle=(INFO, OUTLINE), width=20,
+                command=on_home).pack(pady=10)
 
 
 def show_lessons(frame, subject, on_select_lesson, on_back,on_home):
@@ -41,8 +43,8 @@ def show_lessons(frame, subject, on_select_lesson, on_back,on_home):
     ttk.Label(frame, text=f"فصل های درس {subject}",style="TLabel").pack(pady=10)
     for chapter in lessons.get(subject):
         ttk.Button(frame, text=chapter, bootstyle=(INFO, OUTLINE), width=20,
-                   command=lambda c=chapter : show_chapter_content(frame, subject, c, on_back)).pack(pady=10)
+                   command=lambda c=chapter : show_chapter_content(frame, subject, c, on_back, on_home)).pack(pady=10)
     if on_back:
         ttk.Button(frame, text="بازگشت",bootstyle=(INFO, OUTLINE), command=on_back).pack(pady=10)
     
-    ttk.Button(frame, text="خانه",bootstyle=(INFO, OUTLINE), command=on_home).pack(pady=10)
+    # ttk.Button(frame, text="خانه",bootstyle=(INFO, OUTLINE), command=on_home).pack(pady=10)
