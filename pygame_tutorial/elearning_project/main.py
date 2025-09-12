@@ -17,6 +17,7 @@ root = ttk.Window(themename="vapor")
 style = ttk.Style()
 style.configure('TButton',font=("B Nazanin", 14, "bold")) 
 style.configure('TLabel',font=("B Nazanin", 14, "bold")) 
+style.configure('TEntry',font=("B Nazanin", 14, "bold")) 
 root.title("برنامه آموزشی هوشمند")
 root.geometry("500x400")
 if os.path.exists("./icon.ico"):
