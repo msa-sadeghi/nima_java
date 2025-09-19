@@ -1,4 +1,14 @@
 lessons = {
+   
+    "ب": {
+        "مواد و نقش آنها در زندگی": {
+            "content": "توضیح مربوط به مواد و نقش آنها در زندگی",
+            "icon" :"./data/assets/images/heart.png",
+            "image":"./data/assets/images/heart.png",
+            "video":"./data/assets/videos/lesson.mp4"
+
+        }
+        },
     "شیمی": {
         "مواد و نقش آنها در زندگی": {
             "content": "توضیح مربوط به مواد و نقش آنها در زندگی",

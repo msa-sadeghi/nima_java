@@ -11,6 +11,7 @@ def go_home():
 def on_select_lesson(frame, subject):
         print(f"lesson{subject}")
 
+        
 
 root = ttk.Window(themename="vapor")
 
