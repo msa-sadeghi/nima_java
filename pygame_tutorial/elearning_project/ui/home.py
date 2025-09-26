@@ -7,7 +7,7 @@ import unicodedata
 
 def normalize_text(text):
      text = unicodedata.normalize("NFC", text)
-     text = text.replace("ی", "ي").replace("ک", "ك")
+     text = text.replace("ی", "ي").replace("ك", "ک")
      return text.strip()
 
 
@@ -19,19 +19,19 @@ def show_home(frame, on_select_lesson, on_back, on_home):
     ttk.Label(frame, text="لطفا یک درس را انتخاب کنید",
              style="TLabel").pack(pady=10)
     search_var = tk.StringVar()
-    ttk.Entry(frame, textvariable=search_var).pack(pady=5)
+    ttk.Entry(frame, textvariable=search_var, justify="right").pack(pady=5)
 
     def search():
         query = search_var.get().strip()
         for widget in frame.winfo_children():
+                print(widget.cget("text"))
                 if isinstance(widget, ttk.Button):
                         widget.destroy()
+       
         results = []
 
         for subject, chapters in lessons.items():
              if query in normalize_text(subject):
-                  print("subject", subject)
-                  print("query", query)
                   results.append(subject)
              for chapter in chapters:
                   if query in  normalize_text(chapter):
@@ -49,7 +49,8 @@ def show_home(frame, on_select_lesson, on_back, on_home):
         else:
              ttk.Label(frame, text="موضوعی یافت نشد").pack(pady=5)
                   
-
+        ttk.Button(frame, text="بازگشت",bootstyle=(INFO, OUTLINE), width=20,
+                command=lambda : show_lessons(frame, subject, None, on_back, on_home)).pack(pady=10)
     ttk.Button(frame, text="جستجو", command=search).pack(pady=5)
 
 
@@ -61,3 +62,7 @@ def show_home(frame, on_select_lesson, on_back, on_home):
                    command = lambda s= subject:show_lessons(frame, s, on_select_lesson, \
                                                             on_back, on_home)
                    ).pack(pady=5)
+        
+     
+
+    
