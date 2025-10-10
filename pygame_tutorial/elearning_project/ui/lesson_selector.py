@@ -1,6 +1,7 @@
 import tkinter as tk
 import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
+from ttkbootstrap.dialogs import Messagebox
 from data.lesson_data import lessons
 import os
 import webbrowser
@@ -37,17 +38,34 @@ def show_chapter_content(frame, subject, chapter, on_back, on_home):
         label.image = icon
         label.pack(pady=10)
     if video_path:
-        # ttk.Button(frame, text="Play",bootstyle=(INFO, OUTLINE), width=20,
-        #         command=lambda : play_video(video_path)).pack(pady=10)
-        videoplayer = tkVideoPlayer.TkinterVideo(master=frame, scaled=True)
-        videoplayer.load(video_path)
-        videoplayer.pack(pady=5)
-        videoplayer.play()
+        ttk.Button(frame, text="Play",bootstyle=(INFO, OUTLINE), width=20,
+                command=lambda : play_video(video_path)).pack(pady=10)
+    #     videoplayer = tkVideoPlayer.TkinterVideo(master=frame, scaled=True)
+    #     videoplayer.load(video_path)
+    #     videoplayer.pack(pady=5)
+    #     videoplayer.play()
     if pdf_path:
         ttk.Button(frame, text="بازکردن پی دی اف",bootstyle=(INFO, OUTLINE), width=20,
                 command=lambda : open_pdf(pdf_path)).pack(pady=10)
         
 
+    ttk.Label(frame, text="امتیاز به  این فصل").pack(pady=5)
+
+    score_var = ttk.IntVar(value=0)
+    score_label = ttk.Label(frame, text=f"امتیاز:{score_var.get()}")
+    score_label.pack(pady=5)
+
+    def update_label(value):
+        score_label.config(text=f"امتیاز:{score_var.get()}")
+
+    ttk.Scale(frame, from_=0, to=5, orient="horizontal", variable=score_var,\
+               command=update_label).pack(pady=5)
+    
+    def save_score():
+        Messagebox.show_info(f"امتیاز{score_var.get()}","ثبت امتیاز")
+
+    ttk.Button(frame, text="ثبت امتیاز",bootstyle=(INFO, OUTLINE), width=20,
+                command=save_score).pack(pady=10)
     ttk.Button(frame, text="بازگشت",bootstyle=(INFO, OUTLINE), width=20,
                 command=lambda : show_lessons(frame, subject, None, on_back, on_home)).pack(pady=10)
     ttk.Button(frame, text="خانه",bootstyle=(INFO, OUTLINE), width=20,
