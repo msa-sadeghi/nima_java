@@ -3,9 +3,18 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 from data.lesson_data import lessons
 import os
+import webbrowser
+import tkVideoPlayer
 
 def play_video(video_path):
     os.startfile(os.path.abspath(video_path))
+
+def open_pdf(pdf_path):
+    if pdf_path and os.path.exists(pdf_path):
+        webbrowser.open_new(pdf_path)
+    else:
+        print("file not exists")
+
 
 def show_chapter_content(frame, subject, chapter, on_back, on_home):
     for widget in  frame.winfo_children():
@@ -13,6 +22,7 @@ def show_chapter_content(frame, subject, chapter, on_back, on_home):
     content = lessons[subject][chapter].get("content", "محتوایی برای این فصل وجود ندارد")
     icon_path = lessons[subject][chapter].get("icon")
     video_path = lessons[subject][chapter].get("video")
+    pdf_path = lessons[subject][chapter].get("pdf")
     ttk.Label(frame, text=f"{chapter}", style="TLabel").pack(pady=10)
     if icon_path:
         try:
@@ -27,8 +37,16 @@ def show_chapter_content(frame, subject, chapter, on_back, on_home):
         label.image = icon
         label.pack(pady=10)
     if video_path:
-        ttk.Button(frame, text="Play",bootstyle=(INFO, OUTLINE), width=20,
-                command=lambda : play_video(video_path)).pack(pady=10)
+        # ttk.Button(frame, text="Play",bootstyle=(INFO, OUTLINE), width=20,
+        #         command=lambda : play_video(video_path)).pack(pady=10)
+        videoplayer = tkVideoPlayer.TkinterVideo(master=frame, scaled=True)
+        videoplayer.load(video_path)
+        videoplayer.pack(pady=5)
+        videoplayer.play()
+    if pdf_path:
+        ttk.Button(frame, text="بازکردن پی دی اف",bootstyle=(INFO, OUTLINE), width=20,
+                command=lambda : open_pdf(pdf_path)).pack(pady=10)
+        
 
     ttk.Button(frame, text="بازگشت",bootstyle=(INFO, OUTLINE), width=20,
                 command=lambda : show_lessons(frame, subject, None, on_back, on_home)).pack(pady=10)

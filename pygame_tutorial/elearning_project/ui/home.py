@@ -49,8 +49,10 @@ def show_home(frame, on_select_lesson, on_back, on_home):
         else:
              ttk.Label(frame, text="موضوعی یافت نشد").pack(pady=5)
                   
-        ttk.Button(frame, text="بازگشت",bootstyle=(INFO, OUTLINE), width=20,
-                command=lambda : show_lessons(frame, subject, None, on_back, on_home)).pack(pady=10)
+     #    ttk.Button(frame, text="بازگشت",bootstyle=(INFO, OUTLINE), width=20,
+     #            command=lambda : show_lessons(frame, subject, None, on_back, on_home)).pack(pady=10)
+             ttk.Button(frame, text="خانه",bootstyle=(INFO, OUTLINE), width=20,
+                command=on_home).pack(pady=10)
     ttk.Button(frame, text="جستجو", command=search).pack(pady=5)
 
 
