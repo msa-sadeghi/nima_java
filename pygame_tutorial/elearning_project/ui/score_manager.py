@@ -11,7 +11,7 @@ def load_scores():
 
 
 def save_scores(subject, chapter, score):
-    scores = load_scores
+    scores = load_scores()
     if subject not in scores:
         scores[subject] = {}
     scores[subject][chapter] = score

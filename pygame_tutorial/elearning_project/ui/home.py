@@ -4,6 +4,7 @@ from ttkbootstrap.constants import *
 from ui.lesson_selector import show_lessons
 from data.lesson_data import lessons
 import unicodedata
+from .dashboard import show_dashboard
 
 def normalize_text(text):
      text = unicodedata.normalize("NFC", text)
@@ -64,6 +65,10 @@ def show_home(frame, on_select_lesson, on_back, on_home):
                    command = lambda s= subject:show_lessons(frame, s, on_select_lesson, \
                                                             on_back, on_home)
                    ).pack(pady=5)
+        
+
+    ttk.Button(frame, text="داشبورد پیشرفت",bootstyle=(INFO, OUTLINE),
+                   command = lambda : show_dashboard(frame, lambda :  show_home(frame, on_select_lesson,  on_back, on_home))).pack(pady=5)
         
      
 

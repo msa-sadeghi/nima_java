@@ -6,6 +6,7 @@ from data.lesson_data import lessons
 import os
 import webbrowser
 import tkVideoPlayer
+from ui.score_manager import save_scores, load_scores
 
 def play_video(video_path):
     os.startfile(os.path.abspath(video_path))
@@ -62,6 +63,7 @@ def show_chapter_content(frame, subject, chapter, on_back, on_home):
                command=update_label).pack(pady=5)
     
     def save_score():
+        save_scores(subject, chapter, score_var.get())
         Messagebox.show_info(f"امتیاز{score_var.get()}","ثبت امتیاز")
 
     ttk.Button(frame, text="ثبت امتیاز",bootstyle=(INFO, OUTLINE), width=20,
