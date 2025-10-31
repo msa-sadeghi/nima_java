@@ -100,13 +100,6 @@ lessons = {
             "video":"./data/assets/videos/lesson.mp4",
             "pdf":"./data/assets/pdfs/sample.pdf",
         },
-        "جانوران مهره‌دار": {
-            "content": "توضیح مربوط به جانوران مهره‌دار",
-            "icon" :"./data/assets/images/heart.png",
-            "image":"./data/assets/images/heart.png",
-            "video":"./data/assets/videos/lesson.mp4",
-            "pdf":"./data/assets/pdfs/sample.pdf",
-        },
         "با هم زیستن": {
             "content": "توضیح مربوط به با هم زیستن",
             "icon" :"./data/assets/images/heart.png",

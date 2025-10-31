@@ -9,7 +9,8 @@ def go_home():
         show_home(frame, on_select_lesson,go_back, go_home)
 
 def on_select_lesson(frame, subject):
-        print(f"lesson{subject}")
+        pass
+        # print(f"lesson{subject}")
 
         
 
@@ -19,6 +20,7 @@ style = ttk.Style()
 style.configure('TButton',font=("B Nazanin", 14, "bold")) 
 style.configure('TLabel',font=("B Nazanin", 14, "bold")) 
 style.configure('TEntry',font=("B Nazanin", 14, "bold")) 
+style.configure('My.TMenubutton',font=("B Nazanin", 14, "bold")) 
 root.title("برنامه آموزشی هوشمند")
 root.geometry("500x400")
 if os.path.exists("./icon.ico"):
