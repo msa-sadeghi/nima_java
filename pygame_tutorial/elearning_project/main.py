@@ -1,6 +1,7 @@
 import tkinter as tk
 import ttkbootstrap as ttk
 from ui.home import show_home
+from ui.login import show_login
 import os
 
 def go_back():
@@ -30,7 +31,12 @@ frame = tk.Frame(root)
 # frame.configure(bg="lightblue")
 frame.pack(expand=True, fill="both")
 
-show_home(frame, on_select_lesson, go_back, go_home)
+# show_home(frame, on_select_lesson, go_back, go_home)
+
+def on_login():
+        pass
+
+show_login(frame, on_login)
 
 
 root.mainloop()
