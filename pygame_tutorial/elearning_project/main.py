@@ -31,10 +31,10 @@ frame = tk.Frame(root)
 # frame.configure(bg="lightblue")
 frame.pack(expand=True, fill="both")
 
-# show_home(frame, on_select_lesson, go_back, go_home)
 
-def on_login():
-        pass
+
+def on_login(username):
+        show_home(frame,username, on_select_lesson, go_back, go_home)
 
 show_login(frame, on_login)
 

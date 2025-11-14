@@ -13,7 +13,7 @@ def normalize_text(text):
 
 
 
-def show_home(frame, on_select_lesson, on_back, on_home):
+def show_home(frame,username, on_select_lesson, on_back, on_home):
     for widget in frame.winfo_children():
         widget.destroy()
     ttk.Label(frame, text="لطفا یک درس را انتخاب کنید",
@@ -49,7 +49,7 @@ def show_home(frame, on_select_lesson, on_back, on_home):
                          ttk.Button(frame, text=item,
                          width=20,
                          bootstyle=(INFO, OUTLINE),
-                         command = lambda s= item:show_lessons(frame, s, on_select_lesson, \
+                         command = lambda s= item:show_lessons(frame,username, s, on_select_lesson, \
                                                                       on_back, on_home)
                          ).pack(pady=5)
                   else:
@@ -57,7 +57,7 @@ def show_home(frame, on_select_lesson, on_back, on_home):
                        ttk.Button(frame, text=f"{chapter} ({subject})",
                        width=20,
                        bootstyle=(INFO, OUTLINE),
-                       command = lambda s= subject, c= chapter:show_chapter_content(frame, s, c, \
+                       command = lambda s= subject, c= chapter:show_chapter_content(frame,username, s, c, \
                                                                     on_back, on_home)
                        ).pack(pady=5)
 
@@ -76,7 +76,7 @@ def show_home(frame, on_select_lesson, on_back, on_home):
         ttk.Button(frame, text=subject,
                    width=20,
                    bootstyle=(INFO, OUTLINE),
-                   command = lambda s= subject:show_lessons(frame, s, on_select_lesson, \
+                   command = lambda s= subject:show_lessons(frame,username, s, on_select_lesson, \
                                                             on_back, on_home)
                    ).pack(pady=5)
         

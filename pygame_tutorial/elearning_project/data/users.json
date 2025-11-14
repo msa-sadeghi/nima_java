@@ -1,11 +1,14 @@
 {
-    "sara":
-    {
+    "sara": {
         "password": "123456"
     },
-
-    "ali":
-    {
+    "ali": {
         "password": "asdfgh"
+    },
+    "user": {
+        "password": "123"
+    },
+    "بب": {
+        "password": "بب"
     }
 }

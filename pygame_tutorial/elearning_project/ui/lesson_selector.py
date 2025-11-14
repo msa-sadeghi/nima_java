@@ -18,7 +18,7 @@ def open_pdf(pdf_path):
         print("file not exists")
 
 
-def show_chapter_content(frame, subject, chapter, on_back, on_home):
+def show_chapter_content(frame,username, subject, chapter, on_back, on_home):
     for widget in  frame.winfo_children():
         widget.destroy()
     content = lessons[subject][chapter].get("content", "محتوایی برای این فصل وجود ندارد")
@@ -62,26 +62,26 @@ def show_chapter_content(frame, subject, chapter, on_back, on_home):
     ttk.Scale(frame, from_=0, to=5, orient="horizontal", variable=score_var,\
                command=update_label).pack(pady=5)
     
-    def save_score():
-        save_scores(subject, chapter, score_var.get())
+    def save_score(username):
+        save_scores(username,  subject, chapter, score_var.get())
         Messagebox.show_info(f"امتیاز{score_var.get()}","ثبت امتیاز")
 
     ttk.Button(frame, text="ثبت امتیاز",bootstyle=(INFO, OUTLINE), width=20,
-                command=save_score).pack(pady=10)
+                command=lambda :save_score(username)).pack(pady=10)
     ttk.Button(frame, text="بازگشت",bootstyle=(INFO, OUTLINE), width=20,
-                command=lambda : show_lessons(frame, subject, None, on_back, on_home)).pack(pady=10)
+                command=lambda : show_lessons(frame,username, subject, None, on_back, on_home)).pack(pady=10)
     ttk.Button(frame, text="خانه",bootstyle=(INFO, OUTLINE), width=20,
                 command=on_home).pack(pady=10)
 
 
-def show_lessons(frame, subject, on_select_lesson, on_back,on_home):
+def show_lessons(frame,username, subject, on_select_lesson, on_back,on_home):
     for widget in  frame.winfo_children():
         widget.destroy()
 
     ttk.Label(frame, text=f"فصل های درس {subject}",style="TLabel").pack(pady=10)
     for chapter in lessons.get(subject):
         ttk.Button(frame, text=chapter, bootstyle=(INFO, OUTLINE), width=20,
-                   command=lambda c=chapter : show_chapter_content(frame, subject, c, on_back, on_home)).pack(pady=10)
+                   command=lambda c=chapter : show_chapter_content(frame,username, subject, c, on_back, on_home)).pack(pady=10)
     if on_back:
         ttk.Button(frame, text="بازگشت",bootstyle=(INFO, OUTLINE), command=on_back).pack(pady=10)
     
