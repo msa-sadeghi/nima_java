@@ -20,7 +20,8 @@ def save_scores(username, subject, chapter, score):
     scores = {}
     if os.path.exists(SCORES_FILE):
         with open(SCORES_FILE, "r", encoding="utf-8") as f:
-                scores = json.loads(f)
+                data = f.read()
+                scores = json.loads(data)
     if username not in scores:
         scores[username] = {}
     if subject not in scores[username]:

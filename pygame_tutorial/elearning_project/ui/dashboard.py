@@ -2,13 +2,13 @@ import ttkbootstrap as ttk
 from ttkbootstrap.constants import *
 from ui.score_manager import load_scores
 
-def show_dashboard(frame, on_back):
+def show_dashboard(frame,username, on_back):
     for widget in frame.winfo_children():
         widget.destroy()
 
     ttk.Label(frame, text="داشبور پیشرفت").pack(pady=5)
 
-    scores = load_scores()
+    scores = load_scores(username)
     total_score = 0
     count =  0
     for subject, chapters in scores.items():
@@ -20,7 +20,7 @@ def show_dashboard(frame, on_back):
 
     if count > 0:
         avg = total_score/ count
-        ttk.Label(frame, text=f"میانگین کل نمره ها {avg} / 5").pack(pady=5)
+        ttk.Label(frame, text=f"میانگین کل نمره ها 5 / {avg:.2f}").pack(pady=5)
     else:
         ttk.Label(frame, text=f"هنوز نمره ای ثبت نشده است").pack(pady=5)
 

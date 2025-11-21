@@ -82,7 +82,7 @@ def show_home(frame,username, on_select_lesson, on_back, on_home):
         
 
     ttk.Button(frame, text="داشبورد پیشرفت",bootstyle=(INFO, OUTLINE),
-                   command = lambda : show_dashboard(frame, lambda :  show_home(frame, on_select_lesson, \
+                   command = lambda : show_dashboard(frame,username, lambda :  show_home(frame, on_select_lesson, \
                                                                                  on_back, on_home))).pack(pady=5)
         
      
