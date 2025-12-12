@@ -5,6 +5,7 @@ from ui.lesson_selector import show_lessons, show_chapter_content
 from data.lesson_data import lessons
 import unicodedata
 from .dashboard import show_dashboard
+from ui.admin_panel  import show_admin_panel
 
 
 def normalize_text(text):
@@ -95,3 +96,12 @@ def show_home(frame, username, on_select_lesson, on_back, on_home):
         bootstyle=(INFO, OUTLINE),
         command=lambda: show_dashboard(frame, username, on_back),
     ).pack(pady=5)
+
+    ttk.Button(
+        frame,
+        text="مدیریت محتوا",
+        bootstyle=(INFO, OUTLINE),
+        command=lambda: show_admin_panel(frame),
+    ).pack(pady=5)
+
+

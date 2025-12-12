@@ -19,7 +19,7 @@ def show_admin_panel(frame):
     chapter_var = ttk.StringVar()
     ttk.Entry(frame, textvariable=chapter_var, justify="right").pack(pady=5)
 
-    ttk.Text(frame, text="متن توضیحی").pack(pady=5)
+    ttk.Label(frame, text="متن توضیحی").pack(pady=5)
     context_text = ttk.Text(frame, height=5, width=40)
     context_text.pack(pady=5)
 
@@ -30,46 +30,40 @@ def show_admin_panel(frame):
         if path:
             video_path_var.set(path)
 
-    ttk.Button(
-        frame, text="انتخاب ویدئو", command=select_video
-    ).pack(pady=5)
+    ttk.Button(frame, text="انتخاب ویدئو", command=select_video).pack(pady=5)
 
     pdf_path_var = ttk.StringVar()
+
     def select_pdf():
         path = filedialog.askopenfilename(filetypes=[("PDF Files", "*.pdf")])
         if path:
             pdf_path_var.set(path)
 
-    ttk.Button(
-        frame, text="انتخاب PDF", command=select_pdf
-    ).pack(pady=5)
-
+    ttk.Button(frame, text="انتخاب PDF", command=select_pdf).pack(pady=5)
 
     def save_content():
         subject = subject_var.get().strip()
         chapter = chapter_var.get().strip()
-        content = context_text.get()
+        content = context_text.get("1.0", tk.END)
         video = video_path_var.get()
         pdf = pdf_path_var.get()
 
         if not subject or not chapter:
-            messagebox.showerror("خطا","نام درس و فصل الزامی است")
+            messagebox.showerror("خطا", "نام درس و فصل الزامی است")
             return
-        
+
         if subject not in lessons:
             lessons[subject] = {}
-        lessons[subject][chapter] =  {
+        lessons[subject][chapter] = {
             "content": content,
-            "video" : video,
-            "pdf" : pdf
+            "video": video,
+            "pdf": pdf,
+            "icon": "",
+            "image": "",
         }
         with open("data/lesson_data.py", "w", encoding="utf-8") as f:
             f.write("lessons = " + json.dumps(lessons))
 
         messagebox.showinfo("موفقیت", f"فصل{chapter} به درس {subject} اضافه شد")
 
-    
-
-    ttk.Button(
-        frame, text="ذخیره محتوا", command=save_content
-    ).pack(pady=5)
+    ttk.Button(frame, text="ذخیره محتوا", command=save_content).pack(pady=5)
