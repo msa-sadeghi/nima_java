@@ -1,14 +1,18 @@
 {
-    "sara": {
-        "password": "123456"
+    "admin": {
+        "password": "123456",
+        "is_admin":true
     },
     "ali": {
-        "password": "asdfgh"
+        "password": "asdfgh",
+        "is_admin":false
     },
     "user": {
-        "password": "123"
+        "password": "123",
+        "is_admin":false
     },
     "بب": {
-        "password": "بب"
+        "password": "بب",
+        "is_admin":false
     }
 }

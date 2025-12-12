@@ -6,7 +6,7 @@ from data.lesson_data import lessons
 import unicodedata
 from .dashboard import show_dashboard
 from ui.admin_panel  import show_admin_panel
-
+import json
 
 def normalize_text(text):
     text = unicodedata.normalize("NFC", text)
@@ -96,12 +96,16 @@ def show_home(frame, username, on_select_lesson, on_back, on_home):
         bootstyle=(INFO, OUTLINE),
         command=lambda: show_dashboard(frame, username, on_back),
     ).pack(pady=5)
+    with open("data/users.json", "r", encoding="utf-8") as f:
+             
+        is_admin = json.load(f)
+    if(is_admin[username]['is_admin']):
 
-    ttk.Button(
-        frame,
-        text="مدیریت محتوا",
-        bootstyle=(INFO, OUTLINE),
-        command=lambda: show_admin_panel(frame),
-    ).pack(pady=5)
+        ttk.Button(
+            frame,
+            text="مدیریت محتوا",
+            bootstyle=(INFO, OUTLINE),
+            command=lambda: show_admin_panel(frame),
+        ).pack(pady=5)
 
 
