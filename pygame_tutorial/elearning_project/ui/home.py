@@ -28,6 +28,9 @@ def show_home(frame, username, on_select_lesson, on_back, on_home):
     option_menu.pack(pady=5)
 
     def search():
+        for widget in frame.winfo_children():
+                if isinstance(widget, ttk.Label):
+                    widget.destroy()
         query = search_var.get().strip()
         filter_type = filter_var.get()
         for widget in frame.winfo_children():
@@ -69,6 +72,7 @@ def show_home(frame, username, on_select_lesson, on_back, on_home):
                     ).pack(pady=5)
 
         else:
+            
             ttk.Label(frame, text="موضوعی یافت نشد").pack(pady=5)
 
             ttk.Button(frame, text="جستجو", command=search).pack(pady=5)
