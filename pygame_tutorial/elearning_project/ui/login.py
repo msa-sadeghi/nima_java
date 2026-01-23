@@ -3,6 +3,7 @@ from tkinter import messagebox
 from .user_manager import add_user, check_user
 import os
 import json
+from .custom_entry import AutocompleteEntry
 
 HISTORY_FILE = "login_history.json"
 
@@ -31,28 +32,17 @@ def save_history(username, password):
         json.dump(history, f)
 
 
-def on_keyrelease(c, history):
-    print(c.keysym)
-    if not c.widget.get():
-        return
-    for item in history["usernames"]:
-        if item.lower().startswith(c.widget.get().lower()) and c.keysym != "BackSpace":
-            c.widget.delete(0, "end")
-            c.widget.insert(0, item)
-            break
-
-
 def show_login(frame, on_login):
     for widget in frame.winfo_children():
         widget.destroy()
     history = load_history()
     ttk.Label(frame, text="نام کاربری", style="TLabel").pack(pady=10)
     username_var = ttk.StringVar()
-    usernameEntry = ttk.Entry(frame, textvariable=username_var, style="TEntry")
-    usernameEntry.pack(pady=10)
-    usernameEntry.bind(
-        "<KeyRelease>", lambda c=username_var.get(): on_keyrelease(c, history)
+    usernameEntry = AutocompleteEntry(
+        frame, autocomplete_list=history["usernames"], style="TEntry"
     )
+    usernameEntry.pack(pady=10)
+
     ttk.Label(frame, text="کلمه عبور", style="TLabel").pack(pady=10)
     password_var = ttk.StringVar()
     ttk.Entry(frame, textvariable=password_var, style="TEntry").pack(pady=10)
