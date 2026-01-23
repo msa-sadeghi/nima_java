@@ -41,6 +41,7 @@ def show_login(frame, on_login):
     usernameEntry = AutocompleteEntry(
         frame, autocomplete_list=history["usernames"], style="TEntry"
     )
+    usernameEntry.update_list(load_history()["usernames"])
     usernameEntry.pack(pady=10)
 
     ttk.Label(frame, text="کلمه عبور", style="TLabel").pack(pady=10)
