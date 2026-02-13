@@ -3,10 +3,11 @@ from tkinter import Listbox, END
 
 
 class AutocompleteEntry(ttk.Entry):
-    def __init__(self, parent, autocomplete_list, *args, **kwargs):
-        super().__init__(parent, *args, **kwargs)
+    def __init__(self, parent, autocomplete_list, textvariable=None, *args, **kwargs):
+        super().__init__(parent,textvariable=textvariable, *args, **kwargs)
         self.parent = parent
         self.autocomplete_list = autocomplete_list
+        # self.textvariable = textvariable
         self.filtered = []
         self.listbox = None
         self.bind("<KeyRelease>", self.on_keyrelease)
@@ -31,6 +32,7 @@ class AutocompleteEntry(ttk.Entry):
     def show_listbox(self):
         if not self.listbox:
             self.listbox = Listbox(self.parent, height=5, activestyle="none")
+            self.listbox.bind("<ButtonRelease-1>", self.select_item)
         self.listbox.delete(0, END)
         for item in self.filtered:
             self.listbox.insert(END, item)
@@ -45,3 +47,13 @@ class AutocompleteEntry(ttk.Entry):
 
     def update_list(self, new_list):
         self.autocomplete_list = new_list
+
+    def select_item(self, event=None):
+        if self.listbox:
+            index = self.listbox.curselection()
+            if index:
+                value = self.listbox.get(index)
+                self.delete(0, END)
+                self.insert(0, value)
+            self.hide_listbox()
+        return "break"

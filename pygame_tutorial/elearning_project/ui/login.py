@@ -39,7 +39,7 @@ def show_login(frame, on_login):
     ttk.Label(frame, text="نام کاربری", style="TLabel").pack(pady=10)
     username_var = ttk.StringVar()
     usernameEntry = AutocompleteEntry(
-        frame, autocomplete_list=history["usernames"], style="TEntry"
+        frame, autocomplete_list=history["usernames"],textvariable=username_var, style="TEntry",
     )
     usernameEntry.update_list(load_history()["usernames"])
     usernameEntry.pack(pady=10)
@@ -51,6 +51,9 @@ def show_login(frame, on_login):
     def login_user():
         username = username_var.get()
         password = password_var.get()
+
+        print("username is : ", username)
+        print("password is : ", password)
         if check_user(username, password):
             on_login(username)
             save_history(username, password)
