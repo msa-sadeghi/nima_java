@@ -15,6 +15,7 @@ from ui.theme_manager import (
 )
 from ui.admin_panel import show_admin_panel
 import json
+from ui.progress_chart import show_progress_chart
 
 
 def normalize_text(text):
@@ -35,13 +36,13 @@ def show_home(frame, username, on_select_lesson, on_back, on_home):
         elif name == "dark":
             set_theme("light")
         show_home(
-        frame,
-        username,
-        on_select_lesson,
-        lambda: on_back(username),
-        lambda: on_home(username),
-                )
-        
+            frame,
+            username,
+            on_select_lesson,
+            lambda: on_back(username),
+            lambda: on_home(username),
+        )
+
     theme_btn = ttk.Button(
         frame,
         text="تغییر تم",
@@ -134,6 +135,12 @@ def show_home(frame, username, on_select_lesson, on_back, on_home):
         text="داشبورد پیشرفت",
         bootstyle=(INFO, OUTLINE),
         command=lambda: show_dashboard(frame, username, on_back),
+    ).pack(pady=5)
+    ttk.Button(
+        frame,
+        text="نمودار پیشرفت",
+        bootstyle=(INFO, OUTLINE),
+        command=lambda: show_progress_chart(frame, username, on_back),
     ).pack(pady=5)
     with open("data/users.json", "r", encoding="utf-8") as f:
 
