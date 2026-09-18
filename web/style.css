@@ -1,0 +1,31 @@
+* {
+  box-sizing: border-box;
+}
+
+/* h1 {
+  border: 2px solid green;
+  padding: 30px;
+  margin: 50px;
+  width: 200px;
+}
+
+p {
+  padding: 100px;
+  margin: 30px;
+  border: 7px dotted red;
+} */
+
+/* .container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  gap: 50px;
+} */
+
+img {
+  width: 100%;
+  height: auto;
+}

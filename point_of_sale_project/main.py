@@ -1,7 +1,19 @@
 import sys
-from PySide6.QtWidgets import QWidget, QApplication,QLabel,QLineEdit, QPushButton, QHBoxLayout , \
-QMainWindow, QVBoxLayout, QGridLayout, QFormLayout
+from PySide6.QtWidgets import (
+    QWidget,
+    QApplication,
+    QLabel,
+    QLineEdit,
+    QPushButton,
+    QHBoxLayout,
+    QMainWindow,
+    QVBoxLayout,
+    QGridLayout,
+    QFormLayout,
+)
 from PySide6.QtGui import Qt
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -17,6 +29,7 @@ class MainWindow(QMainWindow):
         self.password_input.setEchoMode(QLineEdit.EchoMode.Password)
 
         self.login_button = QPushButton("ورود")
+        self.login_button.setStyleSheet("background-color:#2e7632; color:white;")
         self.login_button.clicked.connect(self.handle_click)
         form_layout = QFormLayout()
         form_layout.addRow("نام کاربری", self.username_input)
@@ -28,14 +41,11 @@ class MainWindow(QMainWindow):
         container = QWidget()
         container.setLayout(main_layout)
 
-
         self.setCentralWidget(container)
 
-
-        
-       
     def handle_click(self):
-        print("hello")
+        print(f"Hello {self.username_input.text()} your password is : {self.password_input.text()}")
+
 
 def main():
     app = QApplication(sys.argv)
